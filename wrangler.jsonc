@@ -13,7 +13,34 @@
 	"observability": {
 		"enabled": true
 	},
-	"upload_source_maps": true
+	"upload_source_maps": true,
+	/**
+	 * Email sending (Cloudflare Email Service).
+	 * https://developers.cloudflare.com/email-service/api/send-emails/workers-api/
+	 * Locally simulated (logged to console) unless `"remote": true` is set.
+	 */
+	"send_email": [
+		{
+			"name": "EMAIL"
+		}
+	],
+	/**
+	 * Non-secret config. Secrets (tokens, webhook URLs) go in `.dev.vars`
+	 * locally and `wrangler secret put` in production — never here.
+	 */
+	"vars": {
+		"NOTIFY_EMAIL_FROM": "ping@example.com"
+	},
+	/**
+	 * Required secrets: validated on dev/deploy, used for typegen, and —
+	 * importantly — the only .dev.vars keys loaded during local dev.
+	 * `wrangler secret put <NAME>` sets each one in production.
+	 * A channel whose secret is missing locally warns and reports
+	 * "skipped" (see /api/health) instead of failing.
+	 */
+	"secrets": {
+		"required": ["PING_BEARER_TOKEN", "SLACK_WEBHOOK_URL", "NOTIFY_EMAIL_TO"]
+	}
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

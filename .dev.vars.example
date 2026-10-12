@@ -1,0 +1,5 @@
+# Copy to `.dev.vars` for local development (never commit `.dev.vars`).
+# Production: `wrangler secret put <NAME>` for each secret.
+PING_BEARER_TOKEN="local-dev-token"
+SLACK_WEBHOOK_URL=""
+NOTIFY_EMAIL_TO="you@example.com"
